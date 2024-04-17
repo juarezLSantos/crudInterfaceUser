@@ -1,0 +1,36 @@
+.button{
+    border-style: none;
+    height: 40px;
+    padding: 6px 12px;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: box-shadow .6s ease;
+    /* .6s os segundos que vai durar a transição */
+    border-radius: 5px;
+    /* a redondeza do botão */
+}
+
+button.blue{
+    background-color: #1fb6ff;
+}
+
+button.green{
+    background-color: green;
+}
+
+button.red{
+    background-color:red;
+}
+
+button:hover{
+    /* para criar effeito de carregamento do ease (quando vazio fica da cor do fundo) */
+    box-shadow: inset 200px 0 0 #00000055;
+}
+
+
+
+
+
+
