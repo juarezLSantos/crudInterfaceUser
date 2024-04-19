@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/records.css">
     <link rel="stylesheet" href="./css/style.css">
     <script src="./script.js" defer></script>
-    <!-- /// -->
     <title>Crud User</title>
 </head>
 <body>
@@ -17,11 +16,10 @@
     </header>
     <main>
         <button type="button" class="button blue" id="cadastrarUsuario">
-            Cadastrar usuario
+            Cadastrar usuário
         </button>
-
         <table class="records">
-            <thead>
+            <thead >
                 <tr>
                     <th>Nome</th>
                     <th>E-mail</th>
@@ -43,20 +41,20 @@
                 </tr>
             </tbody>
         </table>
+
         <div class="modal" id="modal">
             <section class="modal-content">
                 <header class="modal-header">
-                    <h2>Novo Usuario</h2>
-                    <span class="modal-close" id="modalClose">&#10006</span>
-                    <!-- &#10006 = X -->
+                    <h2>Novo Usuário</h2>
+                    <span class="modal-close" id="modalClose"> &#10006 </span>
                 </header>
                 <form class="modal-form">
                     <input type="text" class="modal-field" placeholder="Nome">
-                    <input type="email" class="modal-field" placeholder="Email">
+                    <input type="email" class="modal-field" placeholder="E-mail">
                     <input type="text" class="modal-field" placeholder="Celular">
                     <input type="text" class="modal-field" placeholder="Cidade">
                 </form>
-                <footer>
+                <footer class="modal-footer">
                     <button class="button green">
                         Salvar
                     </button>
@@ -65,10 +63,10 @@
                     </button>
                 </footer>
             </section>
-         </div>
+        </div>
     </main>
     <footer>
-        Copyright &copy; Gabriel Rodrigues
+        Copyright &copy; Juarez Lima
     </footer>
 </body>
 </html>

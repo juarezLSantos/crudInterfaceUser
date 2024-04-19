@@ -9,7 +9,7 @@
     --primary-color: #FFBA00;
     --secondary-color: #FFF1CC;
     --shadow-color: #CCC;
-    --text-color: #FFF;
+    --text-color: hsl(0, 0%, 100%);
 }
 
 body{
