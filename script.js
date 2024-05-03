@@ -80,7 +80,7 @@ function montarTabela(listUser) {
     <td>${user.telUser}</td>
     <td>${user.cidadeUser}</td>
     <td>
-        <button type="button" class="button green">Editar</button>
+        <button type="button" class="button green"onclick=" updateUser(${user.idUser})>Editar</button>
         <button type="button" class="button red" onclick="deleteUser(${user.idUser})">Excluir</button>
     </td>
 </tr>
@@ -89,7 +89,21 @@ function montarTabela(listUser) {
   tabela.innerHTML = template;
 }
 
-function deleUser(id) {
+function updateUser(id) {
+  openModal();
+  document.getElementById("title-modal").innerText = "Atualizar usuário";
+  document.getElementById("saveValue").innerText = "Atualizar";
+  const retornoData = JSON.parse(localStorage.getItem("userInfos"));
+
+  const usuarioEncontrado = retornoData.find(
+     (userFind) => userFind.idUser == id
+  );
+
+  document.getElementById("name").value = usuarioEncontrado.nameUser;
+  document.getElementById("email").value = usuarioEncontrado.nameUser;
+  document.getElementById("cel").value = usuarioEncontrado.nameUser;
+  document.getElementById("city").value = usuarioEncontrado.nameUser;
+
   alert(id);
 
   let userList = JSON.parse(localStorage.getItem("userInfos")) || [];
@@ -97,9 +111,24 @@ function deleUser(id) {
 
   console.log(findIndex);
 
-  if (findIndex !== -1) {
-    userList.splice(findIndex, 1);
-    localStorage.setItem("userInfos", JSON.stringify(userList));
-    window.location.reload();
-  }
+
 }
+
+  function deleteUser(id) {
+    alert(id);
+  
+    let userList = JSON.parse(localStorage.getItem("userInfos")) || [];
+  
+    const findIndex = userList.findIndex((userId) => userId.idUser == id);
+  
+    console.log(findIndex);
+  
+    if (findIndex === -1) {
+      alert("Nenhum usuário encontrado");
+    } else {
+      userList.splice(findIndex, 1);
+      localStorage.setItem("userInfos", JSON.stringify(userList));
+      window.location.reload();
+    }
+  }
+  
