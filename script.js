@@ -1,134 +1,172 @@
 const openModal = () => {
-  document.getElementById("modal").classList.add("active");
-};
+  document.getElementById("modal").classList.add("active")
+
+  document.getElementById("title-modal").innerText = "Cadastrar usuário"
+  document.getElementById("button-salvar").innerText = "Salvar"
+}
 
 const closeModal = () => {
-  document.getElementById("modal").classList.remove("active");
-};
+  document.getElementById("modal").classList.remove("active")
+  
+}
 
-document
-  .getElementById("cadastrarUsuario")
-  .addEventListener("click", openModal);
+document.getElementById("cadastrarUsuario").addEventListener("click", openModal);
+
 
 document.getElementById("modalClose").addEventListener("click", closeModal);
 
-const CreateNewUser = () => {
-  let listUser = [];
 
-  const nome = document.getElementById("Nome").value;
-  const email = document.getElementById("E-mail").value;
-  const tel = document.getElementById("Celular").value;
-  const cidade = document.getElementById("Cidade").value;
+
+// --------------------------------------------------------------
+
+// function CalcularValores(event) {
+//     event.preventDefault();
+
+//     let dadosUsuario = CapturarValores();
+  
+//     let dadosUsuarioCompleto = OrganizarDados(dadosUsuario);
+
+//     CadastrarUsuario(dadosUsuarioCompleto)
+
+  
+//     window.location.reload();
+  
+// }
+
+// FUNÇÂO VALORES - COM OS INPUTS **** -------------------------
+
+function CapturarValores() {
+  let listaUsuario = [];
+
+
+  const nome = document.getElementById("nameId").value;
+  const email = document.getElementById("emailId").value;
+  const celular = document.getElementById("celularId").value;
+  const cidade = document.getElementById("cidadeId").value;
   const id = Math.floor(Math.random() * 100);
+  
+  // const botaoEditar = document.getElementById("button green").value;
+  // const botaoDeletar = document.getElementById("button red").value;
 
-  const objUser = {
-    nomeUser: nome,
-    emailUser: email,
-    telUser: tel,
-    cidadeUser: cidade,
-    idUser: id,
-  };
-
-  if (localStorage.getItem("userInfos")) {
-    listUser = JSON.parse(localStorage.getItem("userInfos"));
+  const dadosUsuario = {
+      // nome qualquer = nome da const
+      nomeUser: nome,
+      emailUser: email,
+      celularUser: celular,
+      cidadeUser: cidade,
+      idUser: id
   }
+  
 
-  listUser.push(objUser);
-  // console.log(objUser);
+  
+  if (localStorage.getItem("usuariosCadastrados")) {
+      listaUsuario = JSON.parse(localStorage.getItem("usuariosCadastrados"))
+  }
+  
+  listaUsuario.push(dadosUsuario);
 
-  console.log(listUser);
-
-  localStorage.setItem("userInfos", JSON.stringify(objUser));
+  console.log(listaUsuario);
+  
+  localStorage.setItem("usuariosCadastrados", JSON.stringify(listaUsuario))
 
   closeModal();
-};
 
-document.getElementById("saveValue").addEventListener("click", CreateNewUser);
+  window.location.reload()
+  
 
-function CarregarUsuario() {
-  let listUser = [];
+  console.log(dadosUsuario)
 
-  if (localStorage.getItem("userInfos")) {
-    listUser = JSON.parse(localStorage.getItem("userInfos"));
+}
+document.getElementById("button-salvar").addEventListener("click",CapturarValores)
+// FUNÇÂO VALORES - COM OS INPUTS **** -------------------------
+
+
+// FUNÇÂO ORGANIZAR DADOS - COM OS DADOS **** -------------------------
+
+// FUNÇÂO ORGANIZAR DADOS - COM OS DADOS **** -------------------------
+
+// FUNÇÂO CADASTRAR USUARIOS - **** -------------------------
+
+
+// FUNÇÂO CADASTRAR USUARIOS - **** -------------------------
+function CarregarUsuarios() {
+  let listaUsuario = [];
+
+  if (localStorage.getItem("usuariosCadastrados")) {
+      listaUsuario = JSON.parse(localStorage.getItem("usuariosCadastrados"));
   }
-
-  if (listUser.length === 0) {
-    let tabela = document.getElementById("corpo-tabela");
-
-    tabela.innerHTML = `
-        <tr>
-        <td colspan='5'> Nenhum usuário cadastrado! </td>
-        </tr>
-        `;
-  } else {
-    montarTabela(listUser);
+  
+  if (listaUsuario.length == 0) {
+      let tabela = document.getElementById("corpo-tbody");
+      
+      tabela.innerHTML =`
+      <tr > 
+          <td colspan="5"> Nenhum usuário cadastrado </td>
+      </tr>
+      `
+  }else {
+      montarTabela(listaUsuario)
   }
 }
 
-window.addEventListener("DOMContentLoaded", CarregarUsuario);
+document.addEventListener('DOMContentLoaded', CarregarUsuarios)
+// window.addEventListener('DOMContentLoaded', () => CarregarUsuarios())
 
-function montarTabela(listUser) {
-  let tabela = document.getElementById("corpo-tabela");
+
+// FUNÇÂO CARREGAR USUARIOS - **** -------------------------
+
+function montarTabela(listaDeCadastrados) {
+  let tabela = document.getElementById('corpo-tabela')
+
   let template = "";
 
-  console.log(listUser);
-  listUser.forEach((user) => {
-    template += `
-    <tr>
-    <td>${user.nomeUser}</td>
-    <td>${user.emailUser}</td>
-    <td>${user.telUser}</td>
-    <td>${user.cidadeUser}</td>
-    <td>
-        <button type="button" class="button green"onclick=" updateUser(${user.idUser})>Editar</button>
-        <button type="button" class="button red" onclick="deleteUser(${user.idUser})">Excluir</button>
-    </td>
-</tr>
-    `;
+  listaDeCadastrados.forEach((pessoa) => {
+      template += `
+          <tr>
+              <td data-cell="nome" > ${pessoa.nomeUser} </td>
+              <td data-cell="email" > ${pessoa.emailUser} </td>
+              <td data-cell="celular" > ${pessoa.celularUser} </td>
+              <td data-cell="cidade" > ${pessoa.cidadeUser} </td>
+              <td>
+                  <button type="button" class="button green" onclick="updateUser(${pessoa.idUser})">Editar</button>
+                  <button type="button" class="button red" onclick="deleteUser(${pessoa.idUser})">Excluir</button> 
+              </td>
+          </tr>
+      `
+      console.log(listaDeCadastrados);
   });
+
   tabela.innerHTML = template;
+  // colocando o template dentro do tabelea (tbody)
 }
+
 
 function updateUser(id) {
   openModal();
-  document.getElementById("title-modal").innerText = "Atualizar usuário";
-  document.getElementById("saveValue").innerText = "Atualizar";
-  const retornoData = JSON.parse(localStorage.getItem("userInfos"));
 
-  const usuarioEncontrado = retornoData.find(
-     (userFind) => userFind.idUser == id
-  );
+  document.getElementById("title-modal").innerText = "Atualizar usuário"
+  document.getElementById("button-salvar").innerText = "Atualizar"
 
-  document.getElementById("name").value = usuarioEncontrado.nameUser;
-  document.getElementById("email").value = usuarioEncontrado.nameUser;
-  document.getElementById("cel").value = usuarioEncontrado.nameUser;
-  document.getElementById("city").value = usuarioEncontrado.nameUser;
+  
 
-  alert(id);
+  
+}
+// consertar deleteUser
 
-  let userList = JSON.parse(localStorage.getItem("userInfos")) || [];
-  const findIndex = userList.findIndex((userId) => userId.idUser == id);
+function deleteUser (id) {
+  alert(id)
+
+  let listaUsuario = JSON.parse(localStorage.getItem("usuariosCadastrados")) || [];
+  // caso tenha dados usuariosCadastrados Ou array(vazio)
+
+  const  findIndex = listaUsuario.findIndex((userId) => userId.idUser == id)
 
   console.log(findIndex);
 
-
-}
-
-  function deleteUser(id) {
-    alert(id);
-  
-    let userList = JSON.parse(localStorage.getItem("userInfos")) || [];
-  
-    const findIndex = userList.findIndex((userId) => userId.idUser == id);
-  
-    console.log(findIndex);
-  
-    if (findIndex === -1) {
-      alert("Nenhum usuário encontrado");
-    } else {
-      userList.splice(findIndex, 1);
-      localStorage.setItem("userInfos", JSON.stringify(userList));
+  if (findIndex !== -1) {
+      listaUsuario.splice(findIndex, 1)
+      localStorage.setItem("dadosUsuario", JSON.stringify(listaUsuario));
+      // setitem define noto item dentro do local storage
       window.location.reload();
-    }
   }
-  
+}
